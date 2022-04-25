@@ -30,12 +30,12 @@ To improve clarity and prevent bugs like [Apple's goto bug](https://dwheeler.com
 ```java
 // BAD  
 void defeatDragon(Dragon dragon) { 
-  while (dragon.isAlive()) attack(dragon); 
+  while (dragon.alive()) attack(dragon); 
 }
 
 // GOOD
 void defeatDragon(Dragon dragon) { 
-  while (dragon.isAlive()) { 
+  while (dragon.alive()) { 
     attack(dragon); 
   } 
 } 
@@ -53,7 +53,7 @@ public final class Person {
 
   private final String name;
 
-  public String getName() {
+  public String name() {
     
     return name;
   }
@@ -64,7 +64,7 @@ public final class Person {
 public final class Person {
   private final String name;
 
-  public String getName() {
+  public String name() {
     return name;
   }
 }
@@ -104,7 +104,7 @@ public final class Person {
 public final class Person {
   private String name;
 
-  public String getName() {
+  public String name() {
     return name;
   }
 }
