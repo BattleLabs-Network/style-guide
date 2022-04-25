@@ -91,23 +91,6 @@ Sandwich prepareSandwich(Ingredients ingredients, SandwichRecipe recipe) {
 }
 ```
 
-## Naming
-
-
-
-## Forbidden Language Constructs
-
-### Double brace initialization
-Double brace initialization creates an anonymous class with an initializer. This increases the possibility of memory leaks and adds a useless class definition. Furthermore this construct can only be applied to non-final classes.
-
-```java
-// BAD
-new HashMap<String, Integer>() {{
-  put("one", 1);
-  put("two", 2);
-}}; 
-```
-
 ### Public fields
 While public fields are an easy way to provide exported properties of a data structure, they can not be protected against illegal access and may not be removed from a class without breaking its API. Prefer accessors to public fields.
 
@@ -123,63 +106,6 @@ public final class Person {
 
   public String getName() {
     return name;
-  }
-}
-```
-
-### Public constructors
-If there is no strong reason for a public constructor (like framework constraints), 
-don not create one. There are several reasons not to use public constructors, 
-Josh Bloch lists the following in his Book Effective Java (Item #1):
-
-[Medium - Effective Java Item 1](https://medium.com/@biratkirat/learning-effective-java-item-1-57f85b93c254)
-
-Create private constructors and use one of the following creators:
-  
-- Static Factory Method - *When having a few (1-3) fields*
-- Builder Class - *When having a more fields*
-- Factory Class - *When the construction of a class is complicated or requires reused dependencies.*
-
-```java
-// BAD
-public final class Address {
-  private static final int DEFAULT_PORT = 8080;
-  private static final String DEFAULT_HOST = "localhost";
-  
-  private final int port;
-  private final String host;
-  
-  public Address(int port) {
-    this(DEFAULT_HOST, port);
-  }
-
-  public Address(String host, int port) {
-    this.host = host;
-    this.port = port;
-  }
-}
-
-// GOOD
-public final class Address {
-   public static Address create(String host, int port) {
-    Objects.requireNonNull(host);
-    validatePort(port);
-    return new Address(host, port);
-  }
-  
-  public static Address createLocalhost(int port) {
-    validatePort(port);
-    return new Address("localhost", port);
-  }
-  
-  private static void validatePort(int port) { ... }
-  
-  private final int port;
-  private final String host;
-  
-  private Address(String host, int port) {
-    this.host = host;
-    this.port = port;
   }
 }
 ```
